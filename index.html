@@ -389,6 +389,7 @@
             max-width: 1200px;
             margin-left: auto;
             margin-right: auto;
+            padding-bottom: 1rem;
         }
         
         .overview-text,
@@ -1016,8 +1017,34 @@
 
         /* Responsive */
         @media (max-width: 768px) {
+            nav {
+                padding: 0.8rem 1rem;
+                flex-wrap: wrap;
+                gap: 0.5rem;
+            }
+
+            .logo {
+                height: 40px;
+                width: 40px;
+                padding: 3px;
+                order: -1;
+            }
+
             nav ul {
-                gap: 1rem;
+                gap: 0.5rem;
+                width: 100%;
+                order: 2;
+            }
+
+            nav li {
+                flex: 1 1 auto;
+            }
+
+            nav a {
+                font-size: 0.85rem;
+                display: block;
+                padding: 0.5rem 0.3rem;
+                text-align: center;
             }
 
             .hero-content {
@@ -1048,7 +1075,23 @@
             }
 
             section h2 {
-                font-size: 1.8rem;
+                font-size: 1.4rem;
+                margin-top: 2rem;
+                margin-bottom: 1rem;
+                padding: 0 0.5rem 0.8rem;
+                word-wrap: break-word;
+                overflow-wrap: break-word;
+                white-space: normal;
+                line-height: 1.3;
+                position: relative;
+            }
+
+            section h2::after {
+                bottom: -5px;
+                left: 50%;
+                transform: translateX(-50%);
+                width: 70%;
+                max-width: 250px;
             }
 
             .philosophy-quote {
