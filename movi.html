@@ -86,10 +86,11 @@
             padding: 1.5rem 2rem;
             z-index: 1000;
             display: flex;
-            justify-content: space-between;
+            justify-content: flex-start;
             align-items: center;
-            padding-left: 4rem;
-            padding-right: 4rem;
+            gap: 2rem;
+            padding-left: 2rem;
+            padding-right: 2rem;
         }
 
         .nav-logo {
@@ -100,6 +101,7 @@
             -webkit-text-fill-color: transparent;
             background-clip: text;
             letter-spacing: 2px;
+            margin-right: auto;
         }
 
         nav ul {
@@ -135,6 +137,36 @@
 
         nav a:hover::after {
             width: 100%;
+        }
+
+        .hamburger-menu {
+            display: none;
+            flex-direction: column;
+            cursor: pointer;
+            background: none;
+            border: none;
+            padding: 0.5rem;
+            gap: 5px;
+        }
+
+        .hamburger-menu span {
+            width: 25px;
+            height: 3px;
+            background: var(--logo-green);
+            border-radius: 2px;
+            transition: all 0.3s ease;
+        }
+
+        .hamburger-menu.active span:nth-child(1) {
+            transform: rotate(45deg) translate(8px, 8px);
+        }
+
+        .hamburger-menu.active span:nth-child(2) {
+            opacity: 0;
+        }
+
+        .hamburger-menu.active span:nth-child(3) {
+            transform: rotate(-45deg) translate(7px, -7px);
         }
 
         /* Hero Section */
@@ -459,10 +491,7 @@
         .carousel-item {
             flex-shrink: 0;
             min-width: 150px;
-            padding: 1.5rem;
-            border: 1px solid var(--border-color);
-            border-radius: 10px;
-            background: rgba(26, 39, 68, 0.5);
+            padding: 1rem;
             display: flex;
             flex-direction: column;
             align-items: center;
@@ -470,8 +499,6 @@
             text-align: center;
             transition: all 0.3s ease;
             cursor: pointer;
-            height: 120px;
-            filter: brightness(0.9);
         }
 
         .carousel-item:hover {
@@ -482,7 +509,8 @@
         }
 
         .carousel-item img {
-            height: 60px;
+            height: 130px;
+            width: 130px;
             object-fit: contain;
             margin-bottom: 0.5rem;
         }
@@ -581,20 +609,92 @@
 
         /* Responsive */
         @media (max-width: 768px) {
-            .hero h1 {
-                font-size: 2.5rem;
+            * {
+                max-width: 100%;
             }
 
-            .hero p {
-                font-size: 1.1rem;
+            body, html {
+                overflow-x: hidden;
+                width: 100%;
             }
 
-            .section-header h2 {
-                font-size: 2rem;
+            nav {
+                padding-left: 0.75rem;
+                padding-right: 0.75rem;
+            }
+
+            .nav-logo img {
+                height: 50px !important;
             }
 
             nav ul {
-                gap: 1.5rem;
+                position: absolute;
+                top: 70px;
+                left: 0;
+                right: 0;
+                flex-direction: column;
+                background: rgba(10, 14, 39, 0.95);
+                backdrop-filter: blur(20px);
+                border-bottom: 1px solid rgba(6, 182, 212, 0.1);
+                gap: 0;
+                display: none;
+                padding: 0.75rem 0;
+            }
+
+            nav ul.active {
+                display: flex;
+            }
+
+            nav ul li {
+                padding: 0.75rem 1rem;
+                border-bottom: 1px solid rgba(6, 182, 212, 0.05);
+                width: 100%;
+            }
+
+            nav ul li:last-child {
+                border-bottom: none;
+            }
+
+            nav ul li a {
+                font-size: 0.95rem;
+            }
+
+            .hamburger-menu {
+                display: flex;
+            }
+
+            .hero {
+                padding-top: 5rem;
+                padding-bottom: 3rem;
+                padding-left: 1rem;
+                padding-right: 1rem;
+            }
+
+            .hero::before,
+            .hero::after {
+                display: none;
+            }
+
+            .hero-content {
+                max-width: 100%;
+                padding: 0;
+            }
+
+            section {
+                padding-left: 1rem !important;
+                padding-right: 1rem !important;
+            }
+
+            .hero h1 {
+                font-size: 1.8rem;
+            }
+
+            .hero p {
+                font-size: 0.95rem;
+            }
+
+            .section-header h2 {
+                font-size: 1.5rem;
             }
 
             .services-grid {
@@ -608,7 +708,8 @@
 
             .btn {
                 width: 100%;
-                max-width: 300px;
+                max-width: 100%;
+                padding: 0.8rem 1.5rem;
             }
         }
     </style>
@@ -616,8 +717,13 @@
 <body>
     <!-- Navigation -->
     <nav>
+        <button class="hamburger-menu" id="hamburger">
+            <span></span>
+            <span></span>
+            <span></span>
+        </button>
         <div class="nav-logo"><img src="movilogo.png" alt="Movi Innovations Logo" style="height: 100px; object-fit: contain;"></div>
-        <ul>
+        <ul id="navMenu">
             <li><a href="#home">Home</a></li>
             <li><a href="#services">Services</a></li>
             <li><a href="#features">Why Us</a></li>
@@ -643,9 +749,9 @@
         <div style="max-width: 900px; margin: 0 auto;">
             <h2 style="color: var(--text-primary); font-size: 2.5rem; margin-bottom: 2rem; text-align: center; background: linear-gradient(135deg, var(--text-primary), var(--accent-cyan)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;">📖 About Movi Innovations</h2>
             <div style="background: rgba(26, 39, 68, 0.5); padding: 2.5rem; border-radius: 15px; border: 1px solid var(--border-color);">
-                <p style="font-size: 1.1rem; margin-bottom: 1.5rem; color: var(--text-secondary); line-height: 1.8;">Movi Innovations is a forward-thinking printing and corporate gifting company dedicated to transforming your brand vision into extraordinary realities. Since our establishment in 2015, we have been at the forefront of delivering innovative, impactful, and meaningful solutions across the printing and corporate gifting industry.</p>
-                <p style="font-size: 1.1rem; margin-bottom: 1.5rem; color: var(--text-secondary); line-height: 1.8;"><strong style="color: var(--accent-cyan);">Our Commitment:</strong> We are committed to exceeding expectations by providing customized solutions that enhance brand visibility, strengthen client relationships, and create lasting impressions in the minds of your audience.</p>
-                <p style="font-size: 1.1rem; color: var(--text-secondary); line-height: 1.8;"><strong style="color: var(--accent-cyan);">Our Expertise:</strong> With 11+ years of hands-on experience and a team of creative professionals, we collaborate with both large enterprises and small-scale businesses to develop tailored branding, marketing, and communication solutions that truly resonate.</p>
+                <p style="font-size: 1.1rem; margin-bottom: 1.5rem; color: var(--text-secondary); line-height: 1.8; text-align: justify;">Movi Innovations is a forward-thinking printing and corporate gifting company dedicated to transforming your brand vision into extraordinary realities. Since our establishment in 2015, we have been at the forefront of delivering innovative, impactful, and meaningful solutions across the printing and corporate gifting industry.</p>
+                <p style="font-size: 1.1rem; margin-bottom: 1.5rem; color: var(--text-secondary); line-height: 1.8; text-align: justify;"><strong style="color: var(--accent-cyan);">Our Commitment:</strong> We are committed to exceeding expectations by providing customized solutions that enhance brand visibility, strengthen client relationships, and create lasting impressions in the minds of your audience.</p>
+                <p style="font-size: 1.1rem; color: var(--text-secondary); line-height: 1.8; text-align: justify;"><strong style="color: var(--accent-cyan);">Our Expertise:</strong> With 11+ years of hands-on experience and a team of creative professionals, we collaborate with both large enterprises and small-scale businesses to develop tailored branding, marketing, and communication solutions that truly resonate.</p>
             </div>
         </div>
     </section>
@@ -810,7 +916,7 @@
             <h2 style="color: var(--text-primary); font-size: 2.5rem; margin-bottom: 3rem; text-align: center; background: linear-gradient(135deg, var(--text-primary), var(--accent-cyan)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;">🤝 Our Valued Clients</h2>
             
             <!-- Carousel Container -->
-            <div style="position: relative; overflow: hidden; background: rgba(26, 39, 68, 0.3); border-radius: 15px; padding: 2rem; border: 1px solid var(--border-color);">
+            <div style="position: relative; overflow: hidden; background: white; border-radius: 15px; padding: 1rem; border: none;">
                 <div id="carousel-wrapper">
                     <!-- Will be populated by JavaScript -->
                 </div>
@@ -948,9 +1054,8 @@
                 </ul>
             </div>
         </div>
-        <div class="footer-divider"></div>
         <div class="footer-bottom">
-            <p>&copy; 2026 Movi Innovations. All rights reserved. | "Don't do the expected, do the extraordinary."</p>
+            <p>&copy; 2026 Movi Innovations. All rights reserved.</p>
         </div>
     </footer>
 
@@ -978,17 +1083,26 @@
         function loadCarousel() {
             const carouselWrapper = document.getElementById('carousel-wrapper');
             const clients = [
-                { name: 'Reva University', emoji: '🏫', image: 'reva' },
+                { name: 'Altius', emoji: '🏢', image: 'altius' },
                 { name: 'BigBasket', emoji: '🛒', image: 'bigbasket' },
                 { name: 'Childhood Smiles', emoji: '👶', image: 'childhoodsmiles' },
-                { name: 'Infracon Structures', emoji: '🏗️', image: 'infracon' },
-                { name: 'Pixelhen', emoji: '🎨', image: 'pixelhen' },
-                { name: 'The Executive Center', emoji: '💼', image: 'executive' },
-                { name: 'UVR Projects', emoji: '🏢', image: 'uvr' },
+                { name: 'Diya', emoji: '💡', image: 'diya' },
+                { name: 'Eastpoint', emoji: '🌍', image: 'eastpoint' },
+                { name: 'Havn', emoji: '🏠', image: 'havn' },
                 { name: 'Infibeam Avenues', emoji: '📦', image: 'infibeam' },
+                { name: 'Infracon Structures', emoji: '🏗️', image: 'infracon' },
+                { name: 'Johnsonites', emoji: '👥', image: 'johnsonites' },
+                { name: 'MOS', emoji: '🎯', image: 'mos' },
                 { name: 'Odigma Technologies', emoji: '💻', image: 'odigma' },
+                { name: 'Phronetic', emoji: '🧠', image: 'phronetic' },
+                { name: 'Pixelhen', emoji: '🎨', image: 'pixelhen' },
                 { name: 'Recruise Networks', emoji: '🤝', image: 'recruise' },
-                { name: 'Tripsy Travel', emoji: '✈️', image: 'tripsy' }
+                { name: 'Rediff', emoji: '📱', image: 'rediff' },
+                { name: 'Reva University', emoji: '🏫', image: 'reva' },
+                { name: 'Tidi', emoji: '✨', image: 'tidi' },
+                { name: 'Travel Dzire', emoji: '✈️', image: 'traveldzire' },
+                { name: 'Tripsy Travel', emoji: '🗺️', image: 'tripsy' },
+                { name: 'Vastr', emoji: '👗', image: 'vastr' }
             ];
 
             // Create carousel items
@@ -1009,8 +1123,7 @@
                         const img = new Image();
                         img.onload = function() {
                             item.innerHTML = `
-                                <img src="${imgSrc}" alt="${client.name}" style="height: 50px; object-fit: contain; margin-bottom: 0.5rem;">
-                                <p>${client.name}</p>
+                                <img src="${imgSrc}" alt="${client.name}" style="height: 130px; width: 130px; object-fit: contain; margin-bottom: 0.5rem;">
                             `;
                         };
                         img.onerror = function() {
@@ -1046,6 +1159,23 @@
 
         // Initialize carousel when page loads
         document.addEventListener('DOMContentLoaded', loadCarousel);
+
+        // Hamburger menu toggle
+        const hamburger = document.getElementById('hamburger');
+        const navMenu = document.getElementById('navMenu');
+
+        hamburger.addEventListener('click', function() {
+            hamburger.classList.toggle('active');
+            navMenu.classList.toggle('active');
+        });
+
+        // Close menu when a link is clicked
+        document.querySelectorAll('#navMenu a').forEach(link => {
+            link.addEventListener('click', function() {
+                hamburger.classList.remove('active');
+                navMenu.classList.remove('active');
+            });
+        });
     </script>
 </body>
 </html>
