@@ -179,18 +179,23 @@
             justify-content: center;
             position: relative;
             z-index: 1;
+            background-image: url('background.jpg');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            background-blend-mode: multiply;
         }
 
         .hero::before {
             content: '';
             position: absolute;
             top: 0;
-            right: -300px;
-            width: 600px;
-            height: 600px;
-            background: radial-gradient(circle, rgba(6, 182, 212, 0.15) 0%, transparent 70%);
-            border-radius: 50%;
-            animation: float 8s ease-in-out infinite;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: inherit;
+            background-attachment: fixed;
+            z-index: -1;
         }
 
         .hero::after {
@@ -215,6 +220,10 @@
             position: relative;
             z-index: 2;
             text-align: center;
+            background: rgba(0, 0, 0, 0.6);
+            padding: 3rem;
+            border-radius: 12px;
+            backdrop-filter: blur(10px);
         }
 
         .hero h1 {
@@ -223,10 +232,7 @@
             margin-bottom: 1.5rem;
             line-height: 1.2;
             letter-spacing: -1px;
-            background: linear-gradient(135deg, var(--text-primary), var(--accent-cyan));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
+            color: #c6d30c;
             animation: slideDown 0.8s ease;
         }
 
@@ -254,7 +260,7 @@
 
         .hero .subtitle {
             font-size: 1.1rem;
-            color: var(--accent-cyan);
+            color: #c6d30c;
             text-transform: uppercase;
             letter-spacing: 3px;
             margin-bottom: 2rem;
@@ -264,7 +270,7 @@
 
         .hero p {
             font-size: 1.25rem;
-            color: var(--text-secondary);
+            color: #c6d30c;
             max-width: 700px;
             margin: 0 auto 2.5rem;
             line-height: 1.8;
@@ -505,7 +511,7 @@
             filter: brightness(1);
             transform: scale(1.1) translateY(-5px);
             border-color: var(--accent-cyan);
-            background: rgba(6, 182, 212, 0.1);
+            background: white;
         }
 
         .carousel-item img {
@@ -710,6 +716,17 @@
                 width: 100%;
                 max-width: 100%;
                 padding: 0.8rem 1.5rem;
+            }
+
+            #carousel-wrapper {
+                animation: carouselMove 2s linear infinite;
+            }
+
+            .carousel-item:hover {
+                filter: brightness(1);
+                transform: scale(1.1) translateY(-5px);
+                border-color: var(--accent-cyan);
+                background: white !important;
             }
         }
     </style>
